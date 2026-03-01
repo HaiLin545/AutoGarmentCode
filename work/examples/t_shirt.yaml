@@ -1,0 +1,27 @@
+# Simple T-shirt, no bottom garment
+meta:
+  upper: Shirt
+  wb: null
+  bottom: null
+  connected: false
+
+shirt:
+  length: 1.2
+  width: 1.05
+  flare: 1.0
+
+collar:
+  f_collar: CircleNeckHalf
+  b_collar: CircleNeckHalf
+  width: 0.2
+  fc_depth: 0.4
+  bc_depth: 0.0
+
+sleeve:
+  sleeveless: false
+  length: 0.3
+  cuff:
+    type: null
+
+left:
+  enable_asym: false

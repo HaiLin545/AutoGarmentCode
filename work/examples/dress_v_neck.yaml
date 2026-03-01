@@ -1,0 +1,52 @@
+# V-neck short-sleeve dress with circle skirt
+meta:
+  upper: Shirt
+  wb: FittedWB
+  bottom: SkirtCircle
+  connected: true
+
+waistband:
+  waist: 1.0
+  width: 0.3
+
+shirt:
+  strapless: false
+  length: 0.5
+  width: 1.05
+  flare: 1.0
+
+collar:
+  f_collar: VNeckHalf
+  b_collar: CircleNeckHalf
+  width: 0.2
+  fc_depth: 0.8
+  bc_depth: 0.3
+  fc_angle: 90
+  bc_angle: 90
+  f_flip_curve: false
+  b_flip_curve: false
+  component:
+    style: null
+
+sleeve:
+  sleeveless: false
+  armhole_shape: ArmholeCurve
+  length: 0.2
+  sleeve_angle: 30
+  connecting_width: 0.2
+  end_width: 1.0
+  standing_shoulder: false
+  connect_ruffle: 1.0
+  smoothing_coeff: 0.25
+  cuff:
+    type: null
+
+left:
+  enable_asym: false
+
+flare-skirt:
+  length: 0.4
+  rise: 1.0
+  suns: 0.75
+  cut:
+    add: false
