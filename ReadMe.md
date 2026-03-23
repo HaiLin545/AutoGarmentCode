@@ -33,6 +33,83 @@ Official Implementation of [GarmentCode: Programming Parametric Sewing Patterns]
 4. [Dataset documentation](https://www.research-collection.ethz.ch/handle/20.500.11850/673889)
 3. [Running Old Maya+Qualoth tools](https://github.com/maria-korosteleva/GarmentCode/blob/main/docs/Running_Maya_Qualoth.md) 
 
+## AutoGarmentCode Extension (`work/`)
+
+This repository also contains an AI extension in [work/](https://github.com/maria-korosteleva/GarmentCode/tree/main/work), which performs:
+
+`garment image -> body estimation -> LLM design params -> GarmentCode pattern generation (optional simulation)`
+
+The key scripts are:
+
+- `work/get_body.sh`: estimate SMPL + extract body measurements (`smpl.yaml`)
+- `work/agent.sh`: run VLM/LLM pipeline and generate `design.yaml`
+- `work/garmentcode.sh`: build garment patterns from `design.yaml` + `smpl.yaml`, and optionally run simulation
+- `work/run.sh`: single-image end-to-end pipeline
+- `work/run_batch.sh`: batch processing pipeline
+
+### Environment Setup for `work/`
+
+1. Install and verify the base GarmentCode environment first (see Installation docs above).
+2. Install Python dependencies used by `work/`:
+
+```bash
+pip install openai pyyaml
+```
+
+3. Ensure body-estimation scripts are available in the sibling directory:
+
+```text
+../smpl_estimate/run_romp.sh
+../smpl_estimate/run_hybrik.sh
+../smpl_estimate/get_smpl.sh
+```
+
+4. Build and prepare [GarmentMeasurements](https://github.com/mbotsch/GarmentMeasurements), then make sure these paths are valid in `work/get_body.sh`:
+
+```text
+measurement=/home/hailin/code/GarmentMeasurements/build/measurements
+smpl_data_dir=/home/hailin/code/GarmentMeasurements/data_smpl
+```
+
+5. Set your OpenAI-compatible API configuration in `work/agent.py` before running.
+
+### Run Instructions (`work/`)
+
+Run from repository root.
+
+Single image:
+
+```bash
+bash ./work/run.sh
+```
+
+Batch images:
+
+```bash
+bash ./work/run_batch.sh
+```
+
+Or run step by step:
+
+```bash
+bash ./work/get_body.sh <img_path> <output_dir>
+bash ./work/agent.sh <img_name> <output_dir>
+bash ./work/garmentcode.sh <output_dir> [sim]
+```
+
+Default output files in `<output_dir>`:
+
+- `smpl.json`, `smpl.obj`, `smpl.yaml`
+- `design.yaml`
+- generated garment pattern files (and simulation outputs if `sim` is enabled)
+
+### Important Notes
+
+- Update hard-coded local paths in `work/agent.sh`, `work/garmentcode.sh`, and `work/get_body.sh` to match your machine.
+- Keep image path handling consistent across scripts. `get_body.sh` expects `<img_path>`; if you customize `run.sh`, pass a full image path.
+- `work/garmentcode.sh` requires both `<output_dir>/design.yaml` and `<output_dir>/smpl.yaml`.
+- The LLM output is expected to be fenced YAML and then converted into full GarmentCode design schema.
+
 ## Navigation
 
 ### Library
